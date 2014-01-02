@@ -91,7 +91,7 @@ function expand (a, len) {
             da = distances(res).sort(cmp);
         }
         var d = da.shift();
-        res.splice(d.index, 0, mean([ a[d.index], a[d.index+1] ]));
+        res.splice(d.index, 0, mean([ res[d.index], res[d.index+1] ]));
         
         for (var j = d.index; j < da.length; j++) {
             da[j].index ++;
