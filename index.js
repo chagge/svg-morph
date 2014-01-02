@@ -1,24 +1,17 @@
 module.exports = Morph;
 
-function Morph (a, b) {
+function Morph (a, b, opts) {
     if (!(this instanceof Morph)) return new Morph(a, b);
+    if (!opts) opts = {};
     
-    var svg = this.element = createElement('svg');
-    var pa = createElement('path');
-    pa.setAttribute('style', 'fill:none;stroke:red;stroke-width:1px;');
-    pa.setAttribute('d', 'M ' + a.join(' L '));
-    svg.appendChild(pa);
-    
-    var pb = createElement('path');
-    pb.setAttribute('style', 'fill:none;stroke:green;stroke-width:1px;');
-    pb.setAttribute('d', 'M ' + b.join(' L '));
-    svg.appendChild(pb);
-    
-    var amean = mean(a);
-    var bmean = mean(b);
+    var svg = this.element = opts.svg || createElement('svg');
     
     var pc = createElement('path');
-    pc.setAttribute('style', 'fill:none;stroke:purple;stroke-width:1px;');
+    pc.setAttribute('style', [
+        'fill:' + (opts.fill || 'none'),
+        'stroke:' + (opts.stroke || 'black'),
+        'stroke-width:' + (opts.strokeWidth || '1px')
+    ].join(';'));
     pc.setAttribute('d', 'M ' + a.join(' L '));
     
     var auga = a;
@@ -34,8 +27,8 @@ function Morph (a, b) {
     var end = 'M ' + augb.join(' L ');
     
     var anim = createElement('animate');
-    anim.setAttribute('dur', '3s');
-    anim.setAttribute('repeatCount', 'indefinite');
+    anim.setAttribute('dur', opts.duration || '1s');
+    anim.setAttribute('repeatCount', opts.repeatCount || 'indefinite');
     anim.setAttribute('attributeName', 'd');
     anim.setAttribute('d', start);
     anim.setAttribute('values', start + ';' + end);
@@ -43,9 +36,6 @@ function Morph (a, b) {
     pc.appendChild(anim);
     svg.appendChild(pc);
 }
-
-Morph.prototype.animate = function () {
-};
 
 Morph.prototype.appendTo = function (target) {
     if (typeof target === 'string') {
