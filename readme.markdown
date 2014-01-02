@@ -12,27 +12,30 @@ main.js:
 var morph = require('svg-morph');
 var pencil = require('svg-pencil');
 
+var a = document.getElementById('a');
+var b = document.getElementById('b');
+var c = document.getElementById('c');
+
 var pa = pencil();
-pa.appendTo(document.getElementById('a'));
+pa.appendTo(a);
 
 var pb = pencil();
-pb.appendTo(document.getElementById('b'));
+pb.appendTo(b);
 
 var pts = {};
-pa.on('points', function (ps) { pts.a = ps; pa.unregister(); done() });
-pb.on('points', function (ps) { pts.b = ps; pb.unregister(); done() });
+pa.on('points', function (ps) {
+    pts.a = ps;
+    pa.unregister();
+    b.classList.remove('hide');
+});
 
-function done () {
-    if (pts.a && pts.b) run.classList.remove('hide');
-}
-
-var run = document.getElementById('run');
-
-run.addEventListener('click', function () {
+pb.on('points', function (ps) {
+    pts.b = ps;
+    pb.unregister();
+    c.classList.remove('hide');
+    
     var m = morph(pts.a, pts.b);
-    var c = document.getElementById('c');
     m.appendTo(c);
-    run.classList.add('hide');
 });
 ```
 
@@ -47,12 +50,7 @@ index.html:
         border: 2px solid purple;
         width: 300px;
         height: 300px;
-        /* disable text selection: */
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
+        cursor: crosshair;
         user-select: none;
       }
       .hide {
@@ -62,11 +60,8 @@ index.html:
   </head>
   <body>
     <div id="a" class="viewport"></div>
-    <div id="b" class="viewport"></div>
-    <div id="c" class="viewport"></div>
-    <div>
-      <button id="run" class="hide">run</button>
-    </div>
+    <div id="b" class="viewport hide"></div>
+    <div id="c" class="viewport hide"></div>
     <script src="bundle.js"></script>
   </body>
 </html>

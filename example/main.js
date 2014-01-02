@@ -1,25 +1,37 @@
 var morph = require('../');
 var pencil = require('svg-pencil');
 
+var a = document.getElementById('a');
+var b = document.getElementById('b');
+var c = document.getElementById('c');
+
 var pa = pencil();
-pa.appendTo(document.getElementById('a'));
+pa.appendTo(a);
 
 var pb = pencil();
-pb.appendTo(document.getElementById('b'));
+pb.appendTo(b);
 
 var pts = {};
-pa.on('points', function (ps) { pts.a = ps; pa.unregister(); done() });
-pb.on('points', function (ps) { pts.b = ps; pb.unregister(); done() });
+pa.on('points', function (ps) {
+    pts.a = ps;
+    pa.unregister();
+    b.classList.remove('hide');
+});
 
-function done () {
-    if (pts.a && pts.b) run.classList.remove('hide');
-}
-
-var run = document.getElementById('run');
-
-run.addEventListener('click', function () {
+pb.on('points', function (ps) {
+    pts.b = ps;
+    pb.unregister();
+    c.classList.remove('hide');
+    
     var m = morph(pts.a, pts.b);
-    var c = document.getElementById('c');
     m.appendTo(c);
-    run.classList.add('hide');
+    
+    var link = document.getElementById('download');
+    var div = document.createElement('div');
+    div.appendChild(m.element.cloneNode(true));
+    
+    var data = btoa(div.innerHTML);
+    link.setAttribute('download', 'animation.svg');
+    link.setAttribute('href', 'data:image/svg;base64,' + data);
+    link.classList.remove('hide');
 });
