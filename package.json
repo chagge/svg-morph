@@ -1,0 +1,30 @@
+{
+  "name": "svg-morph",
+  "version": "0.0.0",
+  "description": "morph animation between two svg path arrays",
+  "main": "index.js",
+  "devDependencies": {
+    "svg-pencil": "~1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/svg-morph.git"
+  },
+  "homepage": "https://github.com/substack/svg-morph",
+  "keywords": [
+    "svg",
+    "morph",
+    "tween",
+    "shape",
+    "browser",
+    "animation",
+    "vector",
+    "graphics"
+  ],
+  "author": {
+    "name": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net"
+  },
+  "license": "MIT"
+}

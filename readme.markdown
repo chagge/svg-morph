@@ -1,6 +1,6 @@
 # svg-morph
 
-morph animate between two svg path arrays
+morph animation between two svg path arrays
 
 # example
 
